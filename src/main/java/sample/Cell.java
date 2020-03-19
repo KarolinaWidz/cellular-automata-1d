@@ -3,15 +3,15 @@ package sample;
 import javafx.scene.paint.Color;
 
 public enum Cell {
-	DEAD(Color.WHITE,false),
-	ALIVE(Color.PALEGREEN,true);
+	DEAD(false,Color.PALEGREEN),
+	ALIVE(true,Color.DARKMAGENTA);
 
 	private final Color color;
 	private final Boolean flag;
 
-	Cell(Color color, Boolean flag) {
-		this.color = color;
+	Cell(Boolean flag,Color color) {
 		this.flag = flag;
+		this.color = color;
 	}
 
 	public Color getColor() {

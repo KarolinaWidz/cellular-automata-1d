@@ -20,5 +20,11 @@
         </plugins>
     </build>
 
-
+<dependencies>
+    <dependency>
+        <groupId>org.ejml</groupId>
+        <artifactId>ejml-simple</artifactId>
+        <version>0.32</version>
+    </dependency>
+</dependencies>
 </project>

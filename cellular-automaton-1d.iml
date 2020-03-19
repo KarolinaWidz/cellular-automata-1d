@@ -11,5 +11,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-simple:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-core:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-fdense:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-ddense:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-cdense:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-zdense:0.32" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-dsparse:0.32" level="project" />
   </component>
 </module>
