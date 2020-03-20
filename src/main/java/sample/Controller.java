@@ -17,7 +17,7 @@ class Controller {
 		private final int border = 1000;
 		private GridPane cellsGrid;
 
-	private Controller() {
+	public Controller() {
 			this.cells = 11;
 			this.gridFlag = new AtomicBoolean(false);
 			this.iterations = 11;
@@ -76,17 +76,15 @@ class Controller {
 			else{
 				cellsGrid.setGridLinesVisible(false);
 				gridFlag.set(false);
-			}
-		});
+			}});
 
 		draw(cellsGrid);
-
 		setSizeButton.setOnAction(event -> {
-			setValues(cellsNumberField.getText(),iterationField.getText());
+			getValues(cellsNumberField.getText(),iterationField.getText());
 		});
 
 		runButton.setOnAction((event) ->{
-			setValues(cellsNumberField.getText(),iterationField.getText());
+			getValues(cellsNumberField.getText(),iterationField.getText());
 			rule = Integer.parseInt(ruleChoice.getValue());
 			cellsMatrix = new Cell[iterations][cells];
 			simulation(rule,cellsGrid);
@@ -99,6 +97,7 @@ class Controller {
 		stageGrid.add(scrollPane,1,0);
 		return stageGrid;
 	}
+
 	private void draw(GridPane cellsGrid){
 		for(int i = 0; i< this.cells; i++){
 			for(int j = 0; j< this.iterations; j++){
@@ -138,7 +137,7 @@ class Controller {
 			}
 		}
 	}
-	private Cell ruleConverter(char sign){
+	static Cell ruleConverter(char sign){
 		if(sign=='0') return Cell.DEAD;
 		else return Cell.ALIVE;
 
@@ -150,7 +149,7 @@ class Controller {
 				this.cellsMatrix[y][x].getColor()),x,y);
 	}
 
-	private void setValues(String cellsNumber, String iterationsNumber){
+	private void getValues(String cellsNumber, String iterationsNumber){
 		cellsGrid.getChildren().clear();
 		cells=(Integer.parseInt(cellsNumber));
 		iterations=(Integer.parseInt(iterationsNumber));
