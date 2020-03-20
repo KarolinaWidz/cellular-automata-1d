@@ -10,8 +10,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Cellular automaton");
-        Controller test = Controller.getInstance();
-        GridPane stageGrid = test.initBoard();
+        Controller instance = Controller.getInstance();
+        GridPane stageGrid = instance.initBoard();
         primaryStage.setScene(new Scene(stageGrid, 900, 500));
         primaryStage.setMaximized(true);
         primaryStage.show();

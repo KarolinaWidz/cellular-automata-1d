@@ -17,10 +17,8 @@ class Controller {
 		private Cell [][] cellsMatrix;
 		private final int border = 1000;
 		private GridPane cellsGrid;
-		private GridPane stageGrid;
-		private GridPane menuGrid;
 
-		private Controller() {
+	private Controller() {
 			this.cells = 11;
 			this.gridFlag = new AtomicBoolean(false);
 			this.iterations = 10;
@@ -30,8 +28,8 @@ class Controller {
 
 	GridPane initBoard(){
 		cellsGrid = new GridPane();
-		stageGrid = new GridPane();
-		menuGrid = new GridPane();
+		GridPane stageGrid = new GridPane();
+		GridPane menuGrid = new GridPane();
 
 		//labels and text fields
 		Label iterationLabel = new Label("Number of iterations: ");
@@ -92,12 +90,9 @@ class Controller {
 			rule = Integer.parseInt(ruleChoice.getValue());
 			cellsMatrix = new Cell[iterations][cells];
 
-			for(int i=0;i<iterations;i++){
+			for(int i=0;i<iterations;i++)
 				for(int j=0;j<cells;j++)
-				{
 					cellsMatrix[i][j]=Cell.DEAD;
-				}
-			}
 			simulation(rule,cellsGrid);
 		});
 
@@ -134,36 +129,38 @@ class Controller {
 				this.cellsMatrix[0][x]=Cell.DEAD;
 			}
 		}
-		System.out.println(this.cellsMatrix[0][cells/2].getFlag());
-
-		for(int y=0;y<this.iterations-1;y++) {
-			for (int x = 1; x < this.cells-1; x++) {
-				ActiveCells activeCells = new ActiveCells(this.cellsMatrix[y][x - 1], this.cellsMatrix[y][x], this.cellsMatrix[y][x + 1]);
-				if (activeCells.left.getFlag() && activeCells.center.getFlag() && activeCells.right.getFlag())next(binaryRule, x, y, 0);
-				else if ((activeCells.left.getFlag() && activeCells.center.getFlag() && !activeCells.right.getFlag())) next(binaryRule,x,y,1);
-				else if ((activeCells.left.getFlag() && !activeCells.center.getFlag() && activeCells.right.getFlag())) next(binaryRule,x,y,2);
-				else if ((activeCells.left.getFlag() && !activeCells.center.getFlag() && !activeCells.right.getFlag())) next(binaryRule,x,y,3);
-				else if ((!activeCells.left.getFlag() && activeCells.center.getFlag() && activeCells.right.getFlag())) next(binaryRule,x,y,4);
-				else if ((!activeCells.left.getFlag() && activeCells.center.getFlag() && !activeCells.right.getFlag())) next(binaryRule,x,y,5);
-				else if ((!activeCells.left.getFlag() && !activeCells.center.getFlag() && activeCells.right.getFlag())) next(binaryRule,x,y,6);
-				else if ((!activeCells.left.getFlag() && !activeCells.center.getFlag() && !activeCells.right.getFlag())) next(binaryRule,x,y,7);
+		ActiveCells activeCells;
+		for(int y=1;y<this.iterations-1;y++) {
+			for (int x = 0; x < this.cells; x++) {
+				int position;
+				if(x==this.cells-1) activeCells = new ActiveCells(this.cellsMatrix[y-1][x-1], this.cellsMatrix[y-1][x], this.cellsMatrix[y-1][0]);
+				else if (x==0) activeCells = new ActiveCells(this.cellsMatrix[y-1][this.cells-1], this.cellsMatrix[y-1][0], this.cellsMatrix[y-1][1]);
+				else activeCells = new ActiveCells(this.cellsMatrix[y-1][x-1], this.cellsMatrix[y-1][x], this.cellsMatrix[y-1][x +1]);
+				if (activeCells.left.getFlag() && activeCells.center.getFlag() && activeCells.right.getFlag())position=0;
+				else if (activeCells.left.getFlag() && activeCells.center.getFlag()) position=1;
+				else if (activeCells.left.getFlag() && activeCells.right.getFlag()) position=2;
+				else if (activeCells.left.getFlag())position=3;
+				else if (activeCells.center.getFlag() && activeCells.right.getFlag()) position=4;
+				else if (activeCells.center.getFlag())position=5;
+				else if (activeCells.right.getFlag())position=6;
+				else position=7;
+				next(binaryRule,x,y,position);
 			}
 		}
-
 	}
-	Cell ruleConverter(char sign){
+	private Cell ruleConverter(char sign){
 		if(sign=='0') return Cell.DEAD;
 		else return Cell.ALIVE;
 
 	}
-	void next(String binaryRule,int x, int y, int position){
-		this.cellsMatrix[y+1][x]=ruleConverter(binaryRule.charAt(position));
+
+	private void next(String binaryRule, int x, int y, int position){
+		this.cellsMatrix[y][x]=ruleConverter(binaryRule.charAt(position));
 		cellsGrid.add(new Rectangle(this.border / this.cells,this.border / this.cells,
-				this.cellsMatrix[y][x].getColor()),x,y+1);
+				this.cellsMatrix[y][x].getColor()),x,y);
 	}
 
-
-	public static Controller getInstance() {
+	static Controller getInstance() {
 		return INSTANCE;
 	}
 }
