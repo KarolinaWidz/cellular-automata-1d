@@ -172,7 +172,6 @@ class Controller {
 				cells=0;
 				iterations=0;
 			}
-
 		}
 	}
 
