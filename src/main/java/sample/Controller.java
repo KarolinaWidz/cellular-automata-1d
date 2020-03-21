@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
 
 class Controller {
 
@@ -16,8 +17,10 @@ class Controller {
 		private Cell [][] cellsMatrix;
 		private final int border = 1000;
 		private GridPane cellsGrid;
+		private TextField iterationField;
+		private TextField cellsNumberField;
 
-	public Controller() {
+	private Controller() {
 			this.cells = 11;
 			this.gridFlag = new AtomicBoolean(false);
 			this.iterations = 11;
@@ -37,8 +40,8 @@ class Controller {
 		Label ruleChoiceLabel = new Label("Rule: ");
 
 		//fields and combobox
-		TextField iterationField = new TextField("11");
-		TextField cellsNumberField = new TextField("11");
+		iterationField = new TextField("11");
+		cellsNumberField = new TextField("11");
 		ComboBox<String> ruleChoice = new ComboBox<>();
 
 		//tooltips
@@ -79,9 +82,7 @@ class Controller {
 			}});
 
 		draw(cellsGrid);
-		setSizeButton.setOnAction(event -> {
-			getValues(cellsNumberField.getText(),iterationField.getText());
-		});
+		setSizeButton.setOnAction(event -> getValues(cellsNumberField.getText(),iterationField.getText()));
 
 		runButton.setOnAction((event) ->{
 			getValues(cellsNumberField.getText(),iterationField.getText());
@@ -89,6 +90,11 @@ class Controller {
 			cellsMatrix = new Cell[iterations][cells];
 			simulation(rule,cellsGrid);
 		});
+
+		//id
+		iterationField.setId("iterationsField");
+		cellsNumberField.setId("cellsNumberField");
+		cellsGrid.setId("cellsGrid");
 
 		menuGrid.addColumn(0,iterationLabel,cellsNumberLabel,ruleChoiceLabel,setSizeButton,gridButton);
 		menuGrid.addColumn(1,iterationField,cellsNumberField,ruleChoice,runButton);
@@ -139,8 +145,8 @@ class Controller {
 	}
 	static Cell ruleConverter(char sign){
 		if(sign=='0') return Cell.DEAD;
-		else return Cell.ALIVE;
-
+		else if(sign=='1') return Cell.ALIVE;
+		else throw new IllegalArgumentException();
 	}
 
 	private void next(String binaryRule, int x, int y, int position){
@@ -150,10 +156,24 @@ class Controller {
 	}
 
 	private void getValues(String cellsNumber, String iterationsNumber){
-		cellsGrid.getChildren().clear();
-		cells=(Integer.parseInt(cellsNumber));
-		iterations=(Integer.parseInt(iterationsNumber));
-		draw(cellsGrid);
+		if(Pattern.matches("^\\d*$",cellsNumber) && Pattern.matches("^\\d*$",iterationsNumber)
+				&& !cellsNumber.equals("") && !iterationsNumber.equals("")) {
+			cellsGrid.getChildren().clear();
+			cells = (Integer.parseInt(cellsNumber));
+			iterations = (Integer.parseInt(iterationsNumber));
+			draw(cellsGrid);
+		}
+		else {
+			try{
+				throw new IllegalArgumentException("INVALID ARGUMENT");
+			}catch(IllegalArgumentException e ){
+				Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
+				alert.show();
+				cells=0;
+				iterations=0;
+			}
+
+		}
 	}
 
 	static Controller getInstance() {
