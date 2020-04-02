@@ -15,10 +15,10 @@ public enum Cell {
 	}
 
 	public Color getColor() {
-		return color;
+		return this.color;
 	}
 
 	public Boolean getFlag() {
-		return flag;
+		return this.flag;
 	}
 }

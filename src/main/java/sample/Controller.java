@@ -1,107 +1,52 @@
 package sample;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import lombok.Getter;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
+@Getter
 class Controller {
 
-	private static final Controller INSTANCE = new Controller();
+		private GridPane stageGrid;
 		private Integer cells;
 		private Integer iterations;
 		private AtomicBoolean gridFlag;
 		private Integer rule;
 		private Cell [][] cellsMatrix;
 		private final int border = 1000;
-		private GridPane cellsGrid;
-		private TextField iterationField;
-		private TextField cellsNumberField;
+		private static Board board;
 
-	private Controller() {
-			this.cells = 11;
-			this.gridFlag = new AtomicBoolean(false);
-			this.iterations = 11;
-			this.rule = 30;
-			this.cellsMatrix = new Cell[this.iterations][this.cells];
+
+	Controller() {
+
+		board = Board.getInstance();
+		this.stageGrid = board.getStageGrid();
+		this.cells = 11;
+		this.gridFlag = new AtomicBoolean(false);
+		this.iterations = 11;
+		this.rule = 30;
+		this.cellsMatrix = new Cell[this.iterations][this.cells];
+		board.getGridButton().setOnAction((event)-> {
+		if(!this.gridFlag.get()) {
+			board.getCellsGrid().setGridLinesVisible(true);
+			this.gridFlag.set(true);
 		}
+		else{
+			board.getCellsGrid().setGridLinesVisible(false);
+			this.gridFlag.set(false);
+		}});
+		draw(board.getCellsGrid());
+		board.getSetSizeButton().setOnAction(event -> getValues(board.getCellsNumberField().getText(),board.getIterationField().getText()));
 
-	GridPane initBoard(){
-
-		cellsGrid = new GridPane();
-		GridPane stageGrid = new GridPane();
-		GridPane menuGrid = new GridPane();
-
-		//labels
-		Label iterationLabel = new Label("Number of iterations: ");
-		Label cellsNumberLabel = new Label("Number of cells: ");
-		Label ruleChoiceLabel = new Label("Rule: ");
-
-		//fields and combobox
-		iterationField = new TextField("11");
-		cellsNumberField = new TextField("11");
-		ComboBox<String> ruleChoice = new ComboBox<>();
-
-		//tooltips
-		Tooltip iterationToolTip = new Tooltip("Number of iterations");
-		Tooltip cellsToolTip = new Tooltip("Number of cells");
-		Tooltip ruleChoiceToolTip = new Tooltip("Rule");
-
-		//settings
-		iterationField.setMaxSize(60,10);
-		cellsNumberField.setMaxSize(60,10);
-		ruleChoice.setMaxSize(60,10);
-		iterationLabel.setLabelFor(iterationField);
-		cellsNumberLabel.setLabelFor(cellsNumberField);
-		ruleChoiceLabel.setLabelFor(ruleChoice);
-		iterationField.setTooltip(iterationToolTip);
-		cellsNumberField.setTooltip(cellsToolTip);
-		ruleChoice.setTooltip(ruleChoiceToolTip);
-		ruleChoice.getItems().addAll("30","60","90","120","225");
-		ruleChoice.setValue("30");
-		cellsGrid.setPadding(new Insets(10));
-		menuGrid.setPadding(new Insets(10));
-		menuGrid.setHgap(10);
-		menuGrid.setVgap(10);
-
-		//buttons
-		Button runButton = new Button("RUN");
-		Button gridButton = new Button("SHOW GRID");
-		Button setSizeButton = new Button("SET SIZE");
-
-		gridButton.setOnAction((event)-> {
-			if(!gridFlag.get()) {
-				cellsGrid.setGridLinesVisible(true);
-				gridFlag.set(true);
-			}
-			else{
-				cellsGrid.setGridLinesVisible(false);
-				gridFlag.set(false);
-			}});
-
-		draw(cellsGrid);
-		setSizeButton.setOnAction(event -> getValues(cellsNumberField.getText(),iterationField.getText()));
-
-		runButton.setOnAction((event) ->{
-			getValues(cellsNumberField.getText(),iterationField.getText());
-			rule = Integer.parseInt(ruleChoice.getValue());
-			cellsMatrix = new Cell[iterations][cells];
-			simulation(rule,cellsGrid);
+		board.getRunButton().setOnAction((event) ->{
+			getValues(board.getCellsNumberField().getText(),board.getIterationField().getText());
+			this.rule = Integer.parseInt(board.getRuleChoice().getValue());
+			this.cellsMatrix = new Cell[this.iterations][this.cells];
+			simulation(this.rule,board.getCellsGrid());
 		});
-
-		//id
-		iterationField.setId("iterationsField");
-		cellsNumberField.setId("cellsNumberField");
-		cellsGrid.setId("cellsGrid");
-
-		menuGrid.addColumn(0,iterationLabel,cellsNumberLabel,ruleChoiceLabel,setSizeButton,gridButton);
-		menuGrid.addColumn(1,iterationField,cellsNumberField,ruleChoice,runButton);
-		stageGrid.add(menuGrid,0,0);
-		ScrollPane scrollPane = new ScrollPane(cellsGrid);
-		stageGrid.add(scrollPane,1,0);
-		return stageGrid;
 	}
 
 	private void draw(GridPane cellsGrid){
@@ -124,13 +69,10 @@ class Controller {
 				this.cellsMatrix[0][x]=Cell.DEAD;
 			}
 		}
-		ActiveCells activeCells;
-		for(int y=1;y<this.iterations-1;y++) {
+		for(int y=1;y<this.iterations;y++) {
 			for (int x = 0; x < this.cells; x++) {
 				int position;
-				if(x==this.cells-1) activeCells = new ActiveCells(this.cellsMatrix[y-1][x-1], this.cellsMatrix[y-1][x], this.cellsMatrix[y-1][0]);
-				else if (x==0) activeCells = new ActiveCells(this.cellsMatrix[y-1][this.cells-1], this.cellsMatrix[y-1][0], this.cellsMatrix[y-1][1]);
-				else activeCells = new ActiveCells(this.cellsMatrix[y-1][x-1], this.cellsMatrix[y-1][x], this.cellsMatrix[y-1][x +1]);
+				ActiveCells activeCells = new ActiveCells(this.cellsMatrix[y-1][boundaryConverter(x-1)], this.cellsMatrix[y-1][x], this.cellsMatrix[y-1][boundaryConverter(x +1)]);
 				if (activeCells.left.getFlag() && activeCells.center.getFlag() && activeCells.right.getFlag())position=0;
 				else if (activeCells.left.getFlag() && activeCells.center.getFlag()) position=1;
 				else if (activeCells.left.getFlag() && activeCells.right.getFlag()) position=2;
@@ -151,17 +93,17 @@ class Controller {
 
 	private void next(String binaryRule, int x, int y, int position){
 		this.cellsMatrix[y][x]=ruleConverter(binaryRule.charAt(position));
-		cellsGrid.add(new Rectangle(this.border / this.cells,this.border / this.cells,
+		board.getCellsGrid().add(new Rectangle(this.border / this.cells,this.border / this.cells,
 				this.cellsMatrix[y][x].getColor()),x,y);
 	}
 
 	private void getValues(String cellsNumber, String iterationsNumber){
 		if(Pattern.matches("^\\d*$",cellsNumber) && Pattern.matches("^\\d*$",iterationsNumber)
 				&& !cellsNumber.equals("") && !iterationsNumber.equals("")) {
-			cellsGrid.getChildren().clear();
-			cells = (Integer.parseInt(cellsNumber));
-			iterations = (Integer.parseInt(iterationsNumber));
-			draw(cellsGrid);
+			board.getCellsGrid().getChildren().clear();
+			this.cells = (Integer.parseInt(cellsNumber));
+			this.iterations = (Integer.parseInt(iterationsNumber));
+			draw(board.getCellsGrid());
 		}
 		else {
 			try{
@@ -169,13 +111,13 @@ class Controller {
 			}catch(IllegalArgumentException e ){
 				Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
 				alert.show();
-				cells=0;
-				iterations=0;
+				this.cells=0;
+				this.iterations=0;
 			}
 		}
 	}
-
-	static Controller getInstance() {
-		return INSTANCE;
+	private int boundaryConverter(int x){
+		return x<0?this.cells-1 : x%this.cells;
 	}
+
 }
