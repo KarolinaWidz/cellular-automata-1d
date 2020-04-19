@@ -2,11 +2,9 @@ package sample.twoDimensionalGrainGrowth;
 
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 import lombok.Getter;
 import sample.twoDimensionalGrainGrowth.initialStates.StructureChooser;
 import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourChooser;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;

@@ -3,7 +3,6 @@ package sample.twoDimensionalGrainGrowth.initialStates;
 import javafx.scene.control.Alert;
 import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
-
 import java.util.regex.Pattern;
 
 public interface InitialStructure {

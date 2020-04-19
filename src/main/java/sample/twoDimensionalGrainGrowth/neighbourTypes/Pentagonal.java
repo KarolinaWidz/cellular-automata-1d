@@ -1,7 +1,6 @@
 package sample.twoDimensionalGrainGrowth.neighbourTypes;
 
 import sample.twoDimensionalGrainGrowth.Cell;
-
 import java.util.List;
 import java.util.Random;
 

@@ -1,8 +1,6 @@
 package sample.twoDimensionalGrainGrowth.neighbourTypes;
 
-import javafx.util.Pair;
 import sample.twoDimensionalGrainGrowth.Cell;
-
 import java.util.ArrayList;
 import java.util.List;
 

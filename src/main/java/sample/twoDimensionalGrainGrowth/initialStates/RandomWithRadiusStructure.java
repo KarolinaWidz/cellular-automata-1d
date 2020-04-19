@@ -2,7 +2,6 @@ package sample.twoDimensionalGrainGrowth.initialStates;
 
 import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
-
 import java.util.Random;
 
 public class RandomWithRadiusStructure implements InitialStructure {
