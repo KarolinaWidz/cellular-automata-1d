@@ -8,4 +8,5 @@ Cellular automaton simulation using JavaFX.
 - JavaFX
 - Maven
 - TestFX
+- Lombok (version 1.18.12)
 
