@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class)
-class Controller2d1DTest extends ApplicationTest {
+class Controller1d1DTest extends ApplicationTest {
 
 
 	@Override

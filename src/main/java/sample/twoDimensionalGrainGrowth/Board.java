@@ -6,17 +6,21 @@ import javafx.scene.layout.GridPane;
 import lombok.Getter;
 
 @Getter
-class Board {
+public class Board {
 
 	private static Board instance;
 	private GridPane cellsGrid;
 	private TextField xSizeField;
 	private TextField ySizeField;
+	private TextField changeableFirstField;
+	private TextField changeableSecondField;
 	private Button oneStepButton;
 	private Button setSizeButton;
 	private ComboBox<String> boundaryConditionComboBox;
 	private ComboBox<String> nucleationComboBox;
 	private ComboBox<String> neighbourComboBox;
+	private Label changeableFirstLabel;
+	private Label changeableSecondLabel;
 	private GridPane stageGrid;
 	private final int BOARD_SIZE = 700;
 
@@ -36,10 +40,14 @@ class Board {
 		Label boundaryConditionLabel = new Label("Boundary Condition: ");
 		Label nucleationLabel = new Label("Nucleation: ");
 		Label neighbourLabel = new Label("Neighbour: ");
+		this.changeableFirstLabel = new Label("Amount in column: ");
+		this.changeableSecondLabel = new Label("Amount in row: ");
 
 		//input
 		this.xSizeField = new TextField("50");
 		this.ySizeField = new TextField("50");
+		this.changeableFirstField = new TextField("3");
+		this.changeableSecondField = new TextField("3");
 		this.boundaryConditionComboBox = new ComboBox<>();
 		this.nucleationComboBox = new ComboBox<>();
 		this.neighbourComboBox = new ComboBox<>();
@@ -51,11 +59,9 @@ class Board {
 		this.neighbourComboBox.setValue("Von Neumann");
 
 		//settings
-		this.xSizeField.setMaxSize(100,10);
-		this.ySizeField.setMaxSize(100,10);
-		this.boundaryConditionComboBox.setMaxSize(100,10);
-		this.nucleationComboBox.setMaxSize(100,10);
-		this.neighbourComboBox.setMaxSize(100,10);
+		this.boundaryConditionComboBox.setMaxSize(150,10);
+		this.nucleationComboBox.setMaxSize(150,10);
+		this.neighbourComboBox.setMaxSize(150,10);
 		this.cellsGrid.setPadding(new Insets(10));
 		menuGrid.setPadding(new Insets(10));
 		menuGrid.setHgap(10);
@@ -65,8 +71,8 @@ class Board {
 		this.oneStepButton = new Button("RUN");
 		this.setSizeButton = new Button("SET SIZE");
 
-		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,nucleationLabel,neighbourLabel,this.setSizeButton);
-		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.nucleationComboBox,this.neighbourComboBox,this.oneStepButton);
+		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setSizeButton);
+		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton);
 
 		this.stageGrid.add(menuGrid,0,0);
 		ScrollPane scrollPane = new ScrollPane(this.cellsGrid);
