@@ -1,7 +1,9 @@
-package sample;
+package sample.oneDimensionalSimulation;
 
 import javafx.scene.paint.Color;
+import lombok.Getter;
 
+@Getter
 public enum Cell {
 	DEAD(false,Color.PALEGREEN),
 	ALIVE(true,Color.DARKMAGENTA);
@@ -12,13 +14,5 @@ public enum Cell {
 	Cell(Boolean flag,Color color) {
 		this.flag = flag;
 		this.color = color;
-	}
-
-	public Color getColor() {
-		return this.color;
-	}
-
-	public Boolean getFlag() {
-		return this.flag;
 	}
 }

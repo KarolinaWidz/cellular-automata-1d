@@ -1,26 +1,27 @@
-package sample;
+package sample.oneDimensionalSimulation;
 
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 @Getter
-class Controller {
+public class Controller1d {
 
 		private GridPane stageGrid;
 		private Integer cells;
 		private Integer iterations;
 		private AtomicBoolean gridFlag;
 		private Integer rule;
-		private Cell [][] cellsMatrix;
-		private final int border = 1000;
+		private Cell[][] cellsMatrix;
+		private final int BORDER_SIZE = 700;
 		private static Board board;
 
 
-	Controller() {
+	public Controller1d() {
 
 		board = Board.getInstance();
 		this.stageGrid = board.getStageGrid();
@@ -52,7 +53,7 @@ class Controller {
 	private void draw(GridPane cellsGrid){
 		for(int i = 0; i< this.cells; i++){
 			for(int j = 0; j< this.iterations; j++){
-				cellsGrid.add(new Rectangle(this.border / this.cells, this.border / this.cells,Cell.DEAD.getColor()),i,j);
+				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.DEAD.getColor()),i,j);
 			}
 		}
 	}
@@ -61,12 +62,12 @@ class Controller {
 		String binaryRule = String.format("%8s",Integer.toBinaryString(rule)).replace(" ","0");
 		for(int x=0;x<this.cells;x++){
 			if(x==this.cells/2){
-				cellsGrid.add(new Rectangle(this.border / this.cells, this.border / this.cells,Cell.ALIVE.getColor()),x,0);
-				this.cellsMatrix[0][x]=Cell.ALIVE;
+				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.ALIVE.getColor()),x,0);
+				this.cellsMatrix[0][x]= Cell.ALIVE;
 			}
 			else{
-				cellsGrid.add(new Rectangle(this.border / this.cells, this.border / this.cells,Cell.DEAD.getColor()),x,0);
-				this.cellsMatrix[0][x]=Cell.DEAD;
+				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.DEAD.getColor()),x,0);
+				this.cellsMatrix[0][x]= Cell.DEAD;
 			}
 		}
 		for(int y=1;y<this.iterations;y++) {
@@ -85,7 +86,7 @@ class Controller {
 			}
 		}
 	}
-	static Cell ruleConverter(char sign){
+	public static Cell ruleConverter(char sign){
 		if(sign=='0') return Cell.DEAD;
 		else if(sign=='1') return Cell.ALIVE;
 		else throw new IllegalArgumentException();
@@ -93,7 +94,7 @@ class Controller {
 
 	private void next(String binaryRule, int x, int y, int position){
 		this.cellsMatrix[y][x]=ruleConverter(binaryRule.charAt(position));
-		board.getCellsGrid().add(new Rectangle(this.border / this.cells,this.border / this.cells,
+		board.getCellsGrid().add(new Rectangle(this.BORDER_SIZE / this.cells,this.BORDER_SIZE / this.cells,
 				this.cellsMatrix[y][x].getColor()),x,y);
 	}
 

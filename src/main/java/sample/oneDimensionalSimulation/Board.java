@@ -1,4 +1,4 @@
-package sample;
+package sample.oneDimensionalSimulation;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -19,10 +19,10 @@ class Board {
 	private GridPane stageGrid;
 
 	private Board(){
-		stageGrid=initBoard();
+		this.stageGrid=initBoard();
 	}
 
-	GridPane initBoard(){
+	public GridPane initBoard(){
 
 		this.cellsGrid = new GridPane();
 		this.stageGrid = new GridPane();
@@ -81,7 +81,7 @@ class Board {
 
 		return this.stageGrid;
 	}
-	static Board getInstance(){
+	public static Board getInstance(){
 		if(instance==null) instance = new Board();
 		return instance;
 	}
