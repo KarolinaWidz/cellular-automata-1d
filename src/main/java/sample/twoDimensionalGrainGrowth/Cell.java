@@ -30,18 +30,20 @@ public class Cell {
 		});
 	}
 
-//	Cell (Cell copy) {
-//		this.state = copy.state;
-//		this.x = copy.x;
-//		this.y = copy.y;
-//		this.size= copy.size;
-//		this.rectangle = new Rectangle(this.size,this.size,this.state.getColor());
-//		this.rectangle.setOnMouseClicked(event -> {
-//			if(this.state==CellState.DEAD) setDead(CellState.ALIVE);
-//			else setDead(CellState.DEAD);
-//		});
-//
-//	}
+	Cell (Cell copy) {
+		this.state = copy.state;
+		this.x = copy.x;
+		this.y = copy.y;
+		this.size= copy.size;
+		this.id = copy.id;
+		this.rectangle = new Rectangle(this.size,this.size,this.state.getColor());
+		this.rectangle.setOnMouseClicked(event -> {
+			if(this.state==CellState.DEAD) setAlive();
+			else setDead();
+		});
+
+	}
+
 	public void setAlive(){
 		this.state = CellState.ALIVE;
 		this.color = Color.color(Math.random(), Math.random(), Math.random());

@@ -2,9 +2,13 @@ package sample.twoDimensionalGrainGrowth;
 
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 import lombok.Getter;
 import sample.twoDimensionalGrainGrowth.initialStates.StructureChooser;
+import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourChooser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Getter
@@ -25,7 +29,11 @@ public class Controller2d {
 		setSize();
 		board.getSetSizeButton().setOnAction(event -> setInitialCells(board.getNucleationComboBox().getValue()));
 		board.getNucleationComboBox().setOnAction(event -> setFields(board.getNucleationComboBox().getValue()));
-
+		board.getOneStepButton().setOnAction(event->{
+			setInitialCells(board.getNucleationComboBox().getValue());
+			setFields(board.getNucleationComboBox().getValue());
+			simulation();
+		});
 	}
 
 	private void setSize() {
@@ -59,6 +67,27 @@ public class Controller2d {
 	private void setFields(String state){
 		clearCells();
 		structureChooser.changeFields(state,board);
+	}
+
+	private void simulation(){
+		Cell [][] newCellsMatrix = new Cell[this.ySize][this.xSize];
+		for(int i=0; i<this.ySize; i++)
+			for(int j=0; j<this.xSize; j++)
+				newCellsMatrix[i][j]=new Cell(this.cellsMatrix[i][j]);
+
+		NeighbourChooser neighbourChooser = new NeighbourChooser(board.getNeighbourComboBox().getValue());
+		List<Cell> neighbours = new ArrayList<>();
+		for(int y=1;y<this.ySize-1;y++){
+			for(int x=1;x<this.xSize-1;x++) {
+				neighbours = neighbourChooser.addNeighbours(x,y,this.cellsMatrix);
+
+			}
+		}
+
+
+		for(int i=0; i<this.ySize; i++)
+			for(int j=0; j<this.xSize; j++)
+				this.cellsMatrix[i][j].setState(newCellsMatrix[i][j].getState());
 	}
 
 	private int checkValues(String size){
