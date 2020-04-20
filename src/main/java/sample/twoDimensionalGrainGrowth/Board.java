@@ -54,7 +54,7 @@ public class Board {
 		this.neighbourComboBox = new ComboBox<>();
 		this.boundaryConditionComboBox.getItems().addAll("Periodic","Absorbing");
 		this.nucleationComboBox.getItems().addAll("Homogeneous","With Radius","Random","Own");
-		this.neighbourComboBox.getItems().addAll("Von Neumann","Pentagonal","Hexagonal","Moore","With Radius");
+		this.neighbourComboBox.getItems().addAll("Von Neumann","Pentagonal","Hexagonal","Moore");
 		this.boundaryConditionComboBox.setValue("Periodic");
 		this.nucleationComboBox.setValue("Homogeneous");
 		this.neighbourComboBox.setValue("Von Neumann");
@@ -82,7 +82,7 @@ public class Board {
 
 		return this.stageGrid;
 	}
-	public static Board getInstance(){
+	static Board getInstance(){
 		if(instance==null) instance = new Board();
 		return instance;
 	}
