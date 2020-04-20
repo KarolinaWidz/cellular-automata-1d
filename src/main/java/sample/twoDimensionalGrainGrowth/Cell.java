@@ -13,15 +13,14 @@ public class Cell {
 	private Rectangle rectangle;
 	private int x;
 	private int y;
-	private int id;
 	private Color color;
 
-	Cell(CellState state, int x, int y, int size, int id) {
+
+	Cell(CellState state, int x, int y, int size) {
 		this.state = state;
 		this.x = x;
 		this.y = y;
 		this.size= size;
-		this.id = id;
 		this.color = Color.WHITE;
 		this.rectangle = new Rectangle(size,size,this.color);
 		this.rectangle.setOnMouseClicked(event -> {
@@ -35,7 +34,6 @@ public class Cell {
 		this.x = copy.x;
 		this.y = copy.y;
 		this.size= copy.size;
-		this.id = copy.id;
 		this.color = copy.color;
 		this.rectangle = new Rectangle(this.size,this.size,this.color);
 		this.rectangle.setOnMouseClicked(event -> {
@@ -51,7 +49,7 @@ public class Cell {
 		this.rectangle.setFill(this.color);
 	}
 
-	public void copyState(Cell cell){
+	void copyState(Cell cell){
 		this.state = cell.state;
 		this.color = cell.color;
 		this.rectangle.setFill(this.color);
