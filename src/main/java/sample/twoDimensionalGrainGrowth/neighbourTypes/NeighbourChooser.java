@@ -16,12 +16,14 @@ public class NeighbourChooser {
 	}
 
 	private String type;
+	private String boundaryCondition;
 
-	public NeighbourChooser(String type) {
+	public NeighbourChooser(String type, String boundaryCondition) {
 		this.type = type;
+		this.boundaryCondition = boundaryCondition;
 	}
 
 	public List<Cell> addNeighbours(int x, int y,Cell[][] cellsGrid){
-		return neighbourMap.get(type).addNeighbours(x,y,cellsGrid);
+		return neighbourMap.get(this.type).addNeighbours(x,y,cellsGrid,this.boundaryCondition);
 	}
 }

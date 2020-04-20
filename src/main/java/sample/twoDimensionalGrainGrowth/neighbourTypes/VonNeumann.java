@@ -6,12 +6,23 @@ import java.util.List;
 public class VonNeumann implements Neighbour {
 
 	@Override
-	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid) {
+	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid,String boundaryCondition) {
 		cellList.clear();
-		cellList.add(cellsGrid[y - 1][x]);
-		cellList.add(cellsGrid[y + 1][x]);
-		cellList.add(cellsGrid[y][x + 1]);
-		cellList.add(cellsGrid[y][x - 1]);
+		int prevX = x-1;
+		int prevY = y-1;
+		int nextX = x+1;
+		int nextY = y+1;
+
+		if(boundaryCondition.equals("Periodic")){
+			prevX = periodicBoundaryConverter(x-1,cellsGrid[0].length);
+			prevY = periodicBoundaryConverter(y-1,cellsGrid.length);
+			nextX = periodicBoundaryConverter(x+1,cellsGrid[0].length);
+			nextY = periodicBoundaryConverter(y+1,cellsGrid.length);
+		}
+		cellList.add(cellsGrid[prevY][x]);
+		cellList.add(cellsGrid[nextY][x]);
+		cellList.add(cellsGrid[y][nextX]);
+		cellList.add(cellsGrid[y][prevX]);
 		return cellList;
 	}
 }

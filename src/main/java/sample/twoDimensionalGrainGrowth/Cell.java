@@ -36,7 +36,8 @@ public class Cell {
 		this.y = copy.y;
 		this.size= copy.size;
 		this.id = copy.id;
-		this.rectangle = new Rectangle(this.size,this.size,this.state.getColor());
+		this.color = copy.color;
+		this.rectangle = new Rectangle(this.size,this.size,this.color);
 		this.rectangle.setOnMouseClicked(event -> {
 			if(this.state==CellState.DEAD) setAlive();
 			else setDead();
@@ -50,13 +51,14 @@ public class Cell {
 		this.rectangle.setFill(this.color);
 	}
 
+	public void copyState(Cell cell){
+		this.state = cell.state;
+		this.rectangle.setFill(cell.color);
+	}
+
 	public void setDead() {
 		this.state = CellState.DEAD;
 		this.rectangle.setFill(CellState.DEAD.getColor());
 	}
 
-	public void copyState(Cell cell) {
-		this.state = cell.state;
-		this.rectangle.setFill(cell.getColor());
-	}
 }

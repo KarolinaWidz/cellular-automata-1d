@@ -15,7 +15,7 @@ public class Board {
 	private TextField changeableFirstField;
 	private TextField changeableSecondField;
 	private Button oneStepButton;
-	private Button setSizeButton;
+	private Button setInitialsButton;
 	private ComboBox<String> boundaryConditionComboBox;
 	private ComboBox<String> nucleationComboBox;
 	private ComboBox<String> neighbourComboBox;
@@ -69,9 +69,9 @@ public class Board {
 
 		//button
 		this.oneStepButton = new Button("RUN");
-		this.setSizeButton = new Button("SET SIZE");
+		this.setInitialsButton = new Button("SET INITIALS");
 
-		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setSizeButton);
+		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
 		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton);
 
 		this.stageGrid.add(menuGrid,0,0);

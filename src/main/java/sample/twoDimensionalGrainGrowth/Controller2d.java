@@ -2,11 +2,12 @@ package sample.twoDimensionalGrainGrowth;
 
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import sample.twoDimensionalGrainGrowth.initialStates.StructureChooser;
 import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourChooser;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Getter
@@ -25,13 +26,9 @@ public class Controller2d {
 		this.cellsMatrix = new Cell[this.ySize][this.xSize];
 		this.structureChooser = new StructureChooser();
 		setSize();
-		board.getSetSizeButton().setOnAction(event -> setInitialCells(board.getNucleationComboBox().getValue()));
+		board.getSetInitialsButton().setOnAction(event -> setInitialCells(board.getNucleationComboBox().getValue()));
 		board.getNucleationComboBox().setOnAction(event -> setFields(board.getNucleationComboBox().getValue()));
-		board.getOneStepButton().setOnAction(event->{
-			setInitialCells(board.getNucleationComboBox().getValue());
-			setFields(board.getNucleationComboBox().getValue());
-			simulation();
-		});
+		board.getOneStepButton().setOnAction(event-> simulation());
 	}
 
 	private void setSize() {
@@ -58,6 +55,7 @@ public class Controller2d {
 	}
 	private void setInitialCells(String state){
 		clearCells();
+		setSize();
 		if(!state.equals("Own")){
 			structureChooser.drawStructure(state,this.cellsMatrix,board);
 		}
@@ -73,19 +71,27 @@ public class Controller2d {
 			for(int j=0; j<this.xSize; j++)
 				newCellsMatrix[i][j]=new Cell(this.cellsMatrix[i][j]);
 
-		NeighbourChooser neighbourChooser = new NeighbourChooser(board.getNeighbourComboBox().getValue());
-		List<Cell> neighbours = new ArrayList<>();
-		for(int y=1;y<this.ySize-1;y++){
-			for(int x=1;x<this.xSize-1;x++) {
-				neighbours = neighbourChooser.addNeighbours(x,y,this.cellsMatrix);
+		NeighbourChooser neighbourChooser = new NeighbourChooser(board.getNeighbourComboBox().getValue(),
+				board.getBoundaryConditionComboBox().getValue());
 
-			}
+		List<Cell> neighbours;
+		for(int y=0;y<this.ySize;y++){
+			for(int x=0;x<this.xSize;x++) {
+				if(!this.cellsMatrix[y][x].getState().getFlag()){
+					neighbours = neighbourChooser.addNeighbours(x,y,this.cellsMatrix);
+					Map<Cell,Integer> statesMap = new HashMap<>();
+					neighbours.stream().filter(cell -> cell.getState().getFlag()).forEach(cell -> statesMap
+							.put(cell,statesMap.getOrDefault(cell,0)+1));
+					if(statesMap.containsValue(1)){
+						newCellsMatrix[y][x].copyState(Collections.max(statesMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey());
+					}
+					}
+				}
 		}
-
 
 		for(int i=0; i<this.ySize; i++)
 			for(int j=0; j<this.xSize; j++)
-				this.cellsMatrix[i][j].setState(newCellsMatrix[i][j].getState());
+				this.cellsMatrix[i][j].copyState(newCellsMatrix[i][j]);
 	}
 
 	private int checkValues(String size){
