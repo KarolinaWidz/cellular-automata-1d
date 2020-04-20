@@ -23,6 +23,7 @@ public class Board {
 	private Label changeableSecondLabel;
 	private GridPane stageGrid;
 	private final int BOARD_SIZE = 700;
+	private Button fiveStepsButton;
 
 	private Board(){
 		this.stageGrid=initBoard();
@@ -68,11 +69,12 @@ public class Board {
 		menuGrid.setVgap(10);
 
 		//button
-		this.oneStepButton = new Button("RUN");
+		this.oneStepButton = new Button("ONE STEP");
 		this.setInitialsButton = new Button("SET INITIALS");
+		this.fiveStepsButton = new Button("FIVE STEP");
 
 		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
-		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton);
+		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton,this.fiveStepsButton);
 
 		this.stageGrid.add(menuGrid,0,0);
 		ScrollPane scrollPane = new ScrollPane(this.cellsGrid);

@@ -28,7 +28,9 @@ public class Controller2d {
 		setSize();
 		board.getSetInitialsButton().setOnAction(event -> setInitialCells(board.getNucleationComboBox().getValue()));
 		board.getNucleationComboBox().setOnAction(event -> setFields(board.getNucleationComboBox().getValue()));
+		board.getNeighbourComboBox().setOnAction(event -> clearCells());
 		board.getOneStepButton().setOnAction(event-> simulation());
+		board.getFiveStepsButton().setOnAction(event -> {for(int i=0;i<5;i++) simulation();});
 	}
 
 	private void setSize() {
@@ -82,11 +84,11 @@ public class Controller2d {
 					Map<Cell,Integer> statesMap = new HashMap<>();
 					neighbours.stream().filter(cell -> cell.getState().getFlag()).forEach(cell -> statesMap
 							.put(cell,statesMap.getOrDefault(cell,0)+1));
-					if(statesMap.containsValue(1)){
+					if(statesMap.entrySet().stream().anyMatch(i -> i.getValue() > 0)){
 						newCellsMatrix[y][x].copyState(Collections.max(statesMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey());
 					}
-					}
 				}
+			}
 		}
 
 		for(int i=0; i<this.ySize; i++)

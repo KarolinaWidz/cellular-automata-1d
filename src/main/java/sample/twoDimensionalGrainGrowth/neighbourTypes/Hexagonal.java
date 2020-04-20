@@ -13,7 +13,7 @@ public class Hexagonal extends VonNeumann{
 			cellList.add(cellsGrid[periodicBoundaryConverter(y + generatedY,cellsGrid.length)]
 					[periodicBoundaryConverter(x + generatedX,cellsGrid[0].length)]);
 			cellList.add(cellsGrid[periodicBoundaryConverter(y - generatedY,cellsGrid.length)]
-					[periodicBoundaryConverter(x - generatedX,cellsGrid.length)]);
+					[periodicBoundaryConverter(x - generatedX,cellsGrid[0].length)]);
 		}
 		else{
 			cellList.add(cellsGrid[y + generatedY][x + generatedX]);
