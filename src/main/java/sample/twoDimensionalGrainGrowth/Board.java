@@ -71,7 +71,7 @@ public class Board {
 		//button
 		this.oneStepButton = new Button("ONE STEP");
 		this.setInitialsButton = new Button("SET INITIALS");
-		this.fiveStepsButton = new Button("FIVE STEP");
+		this.fiveStepsButton = new Button("FIVE STEPS");
 
 		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
 		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton,this.fiveStepsButton);
