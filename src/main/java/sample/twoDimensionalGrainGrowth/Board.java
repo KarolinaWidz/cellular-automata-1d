@@ -59,19 +59,21 @@ public class Board {
 		this.nucleationComboBox.setValue("Homogeneous");
 		this.neighbourComboBox.setValue("Von Neumann");
 
+		//button
+		this.oneStepButton = new Button("ONE STEP");
+		this.setInitialsButton = new Button("SET INITIALS");
+		this.fiveStepsButton = new Button("FIVE STEPS");
+
 		//settings
 		this.boundaryConditionComboBox.setMaxSize(150,10);
 		this.nucleationComboBox.setMaxSize(150,10);
 		this.neighbourComboBox.setMaxSize(150,10);
 		this.cellsGrid.setPadding(new Insets(10));
+		this.oneStepButton.setMaxSize(100,10);
+		this.fiveStepsButton.setMaxSize(100,10);
 		menuGrid.setPadding(new Insets(10));
 		menuGrid.setHgap(10);
 		menuGrid.setVgap(10);
-
-		//button
-		this.oneStepButton = new Button("ONE STEP");
-		this.setInitialsButton = new Button("SET INITIALS");
-		this.fiveStepsButton = new Button("FIVE STEPS");
 
 		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
 		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton,this.fiveStepsButton);
