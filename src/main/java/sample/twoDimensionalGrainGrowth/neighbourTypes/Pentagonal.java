@@ -1,12 +1,13 @@
 package sample.twoDimensionalGrainGrowth.neighbourTypes;
 
+import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.List;
 import java.util.Random;
 
 public class Pentagonal implements Neighbour {
 	@Override
-	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid,String boundaryCondition) {
+	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid, Board board) {
 		cellList.clear();
 		Random generator = new Random();
 		int endX=0;
@@ -22,7 +23,7 @@ public class Pentagonal implements Neighbour {
 		for(int i=-1+startY;i<2+endY;i++)
 			for(int j=-1+startX;j<2+endX;j++)
 				if(!(i==0 && j==0))
-					if(boundaryCondition.equals("Periodic"))
+					if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
 						cellList.add(cellsGrid[periodicBoundaryConverter(y+i,cellsGrid.length)]
 								[periodicBoundaryConverter(x+j,cellsGrid[0].length)]);
 					else

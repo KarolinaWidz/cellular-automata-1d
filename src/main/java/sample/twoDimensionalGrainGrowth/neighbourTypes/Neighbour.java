@@ -1,5 +1,6 @@
 package sample.twoDimensionalGrainGrowth.neighbourTypes;
 
+import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,5 +10,5 @@ public interface Neighbour {
 		return x<0?boundary-1 : x%boundary;
 	}
 	List<Cell> cellList = new ArrayList<>();
-	List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid,String boundaryCondition);
+	List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid, Board board);
 }

@@ -27,7 +27,7 @@ public class Controller2d {
 		setSize();
 		board.getSetInitialsButton().setOnAction(event -> setInitialCells(board.getNucleationComboBox().getValue()));
 		board.getNucleationComboBox().setOnAction(event -> setFields(board.getNucleationComboBox().getValue()));
-		board.getNeighbourComboBox().setOnAction(event -> clearCells());
+		board.getNeighbourComboBox().setOnAction(event -> {clearCells(); setInitialCells(board.getNucleationComboBox().getValue());});
 		board.getOneStepButton().setOnAction(event-> simulationChooser());
 		board.getFiveStepsButton().setOnAction(event -> {for(int i=0;i<5;i++) simulationChooser();});
 	}
@@ -91,8 +91,7 @@ public class Controller2d {
 	}
 
 	private void simulation(Cell [][] newCellsMatrix, Cell [][] cellsMatrix, int shift){
-		NeighbourChooser neighbourChooser = new NeighbourChooser(board.getNeighbourComboBox().getValue(),
-				board.getBoundaryConditionComboBox().getValue());
+		NeighbourChooser neighbourChooser = new NeighbourChooser();
 
 		List<Cell> neighbours;
 		for (int y = shift; y < cellsMatrix.length-shift; y++) {

@@ -29,7 +29,7 @@ public class Cell {
 		});
 	}
 
-	Cell (Cell copy) {
+	public Cell(Cell copy) {
 		this.state = copy.state;
 		this.x = copy.x;
 		this.y = copy.y;
