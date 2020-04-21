@@ -14,7 +14,8 @@ public class HexagonalRandom extends VonNeumann{
 		int firstX = 1;
 		int secondY = -1;
 		int secondX = -1;
-		if(new Random().nextInt(2)==1){
+		if((board.getNeighbourComboBox().getValue().equals("Hexagonal - Random") && new Random().nextInt(2)==1)
+		|| board.getNeighbourComboBox().getValue().equals("Hexagonal - Right")){
 			firstY=-1;
 			secondY=1;
 			secondX=-1;

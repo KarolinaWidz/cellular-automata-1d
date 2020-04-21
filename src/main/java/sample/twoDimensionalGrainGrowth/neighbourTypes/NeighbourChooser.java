@@ -12,8 +12,8 @@ public class NeighbourChooser {
 		neighbourMap.put("Von Neumann",new VonNeumann());
 		neighbourMap.put("Moore", new Moore());
 		neighbourMap.put("Hexagonal - Random", new HexagonalRandom());
-		neighbourMap.put("Hexagonal - Left", new HexagonalLeft());
-		neighbourMap.put("Hexagonal - Right", new HexagonalRight());
+		neighbourMap.put("Hexagonal - Left", new HexagonalRandom());
+		neighbourMap.put("Hexagonal - Right", new HexagonalRandom());
 		neighbourMap.put("Pentagonal", new Pentagonal());
 	}
 
