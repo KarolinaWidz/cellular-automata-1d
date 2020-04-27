@@ -2,6 +2,7 @@
 Cellular automaton simulation using JavaFX. 
 - Cellular automaton 1D
 - Grain Growth 2D
+- Smoothing edges using Monte Carlo method
 
 ![CA simulation](./simulation.PNG) 
 
