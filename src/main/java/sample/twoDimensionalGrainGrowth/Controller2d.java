@@ -30,7 +30,7 @@ public class Controller2d {
 		board.getNeighbourComboBox().setOnAction(event -> {clearCells(); setInitialCells(board.getNucleationComboBox().getValue());});
 		board.getOneStepButton().setOnAction(event-> simulationChooser());
 		board.getFiveStepsButton().setOnAction(event -> {for(int i=0;i<5;i++) simulationChooser();});
-		board.getMonteCarloSimulationButton().setOnAction(event->mcSimulation(checkDouble(board.getKtField().getText()), checkInt(board.getMcIterationsField().getText(),0)));
+		board.getMonteCarloSimulationButton().setOnAction(event->mcChooser());
 	}
 
 	private void setSize() {
@@ -65,6 +65,16 @@ public class Controller2d {
 	private void setFields(String state){
 		clearCells();
 		structureChooser.changeFields(state,board);
+	}
+	private Cell[][] createBiggerCellsMatrix(){
+		Cell [][] biggerCellsMatrix = new Cell[this.ySize+2][this.xSize+2];
+		for(int i=0; i<this.ySize+2; i++)
+			for(int j=0; j<this.xSize+2; j++)
+				if(i==0 || j ==0 || i==this.ySize+1 || j==this.xSize+1)
+					biggerCellsMatrix[i][j]=new Cell(CellState.DEAD,0,0,board.getBOARD_SIZE()/this.xSize);
+				else
+					biggerCellsMatrix[i][j]=new Cell(this.cellsMatrix[i-1][j-1]);
+		return biggerCellsMatrix;
 	}
 
 	private void simulationChooser(){
@@ -103,47 +113,47 @@ public class Controller2d {
 		}
 	}
 
-	private void mcSimulation(double kt, int iterations){
-		Random random = new Random();
-		NeighbourChooser neighbourChooser = new NeighbourChooser();
-		List <Cell> neighbours;
-		for(int i=0;i<iterations+1;i++){
-			List <Cell> mixedCells = Arrays.stream(this.cellsMatrix)
-					.flatMap(Arrays::stream)
-					.collect(Collectors.toList());
-			for(int j=0;j<(this.xSize*this.ySize);j++){
-				Collections.shuffle(mixedCells);
-				neighbours = neighbourChooser.addNeighbours(mixedCells.get(0).getX(), mixedCells.get(0).getY(),this.cellsMatrix);
-				Collections.shuffle(neighbours);
-				Cell actual;
-				if(i==0) actual = mixedCells.get(0);
-				else actual = new Cell(neighbours.get(0));
-				int counter = (int) neighbours.stream().filter(cell -> cell.getColor() != actual.getColor()).count();
-				double energyDifference = counter - actual.getEnergy();
-				if(energyDifference>0 && random.nextDouble()<=Math.exp((-1)*energyDifference/kt)){
-					actual.setEnergy(counter);
-					if(i!=0) mixedCells.get(0).copyState(actual);
-				}
-				if(energyDifference<=0){
-					actual.setEnergy(counter);
-					if(i!=0) mixedCells.get(0).copyState(actual);
-				}
-				mixedCells.remove(0);
-			}
+
+	private void mcChooser(){
+		for(int i=0;i<Math.max(this.xSize,this.ySize);i++)
+			simulationChooser();
+		for(int i=0;i< checkInt(board.getMcIterationsField().getText(),0);i++){
+			if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
+				mcSimulation(checkDouble(board.getKtField().getText()),i,this.cellsMatrix,0);
+			else
+				mcSimulation(checkDouble(board.getKtField().getText()),i,createBiggerCellsMatrix(),1);
 		}
 	}
 
-	private Cell[][] createBiggerCellsMatrix(){
-		Cell [][] biggerCellsMatrix = new Cell[this.ySize+2][this.xSize+2];
-		for(int i=0; i<this.ySize+2; i++)
-			for(int j=0; j<this.xSize+2; j++)
-				if(i==0 || j ==0 || i==this.ySize+1 || j==this.xSize+1)
-					biggerCellsMatrix[i][j]=new Cell(CellState.DEAD,0,0,board.getBOARD_SIZE()/this.xSize);
-				else
-					biggerCellsMatrix[i][j]=new Cell(this.cellsMatrix[i-1][j-1]);
-		return biggerCellsMatrix;
+	private void mcSimulation(double kt, int i, Cell [][] newCellMatrix,int shift){
+		Random random = new Random();
+		NeighbourChooser neighbourChooser = new NeighbourChooser();
+		List <Cell> neighbours;
+		List <Cell> mixedCells = Arrays.stream(this.cellsMatrix)
+				.flatMap(Arrays::stream)
+				.collect(Collectors.toList());
+		for(int j=0;j<(this.xSize*this.ySize);j++){
+			Collections.shuffle(mixedCells);
+			neighbours = neighbourChooser.addNeighbours(mixedCells.get(0).getX()+shift, mixedCells.get(0).getY()+shift,newCellMatrix)
+					.stream().filter(cell -> cell.getState().getFlag()).collect(Collectors.toList());
+			Collections.shuffle(neighbours);
+			Cell actual;
+			if(neighbours.size()==0) break;
+			if(i==0) actual = mixedCells.get(0);
+			else actual = new Cell(neighbours.get(0));
+			int counter = (int) neighbours.stream().filter(cell -> cell.getColor() != actual.getColor()).count();
+			double energyDifference = counter - actual.getEnergy();
+			if(energyDifference>0 && random.nextDouble()<=Math.exp((-1)*energyDifference/kt)){
+				actual.setEnergy(counter);
+				if(i!=0) mixedCells.get(0).copyState(actual);
+			}
+			if(energyDifference<=0){
+				actual.setEnergy(counter);
+				if(i!=0) mixedCells.get(0).copyState(actual);
+			}
+			mixedCells.remove(0);
+		}
 	}
-
 
 	private int checkInt(String size, int value){
 		if(Pattern.matches("^\\d*$",size) && (Integer.parseInt(size))>0){
