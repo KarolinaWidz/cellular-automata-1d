@@ -24,6 +24,9 @@ public class Board {
 	private GridPane stageGrid;
 	private final int BOARD_SIZE = 700;
 	private Button fiveStepsButton;
+	private Button monteCarloSimulationButton;
+	private TextField ktField;
+	private TextField mcIterationsField;
 
 	private Board(){
 		this.stageGrid=initBoard();
@@ -33,6 +36,8 @@ public class Board {
 
 		this.cellsGrid = new GridPane();
 		this.stageGrid = new GridPane();
+		GridPane caMenuGrid = new GridPane();
+		GridPane mcMenuGrid = new GridPane();
 		GridPane menuGrid = new GridPane();
 
 		//labels
@@ -41,6 +46,8 @@ public class Board {
 		Label boundaryConditionLabel = new Label("Boundary Condition: ");
 		Label nucleationLabel = new Label("Nucleation: ");
 		Label neighbourLabel = new Label("Neighbour: ");
+		Label mcIterationsLabel = new Label("Number of iterations: ");
+		Label ktLabel = new Label("kt: (0.1-6) ");
 		this.changeableFirstLabel = new Label("Amount in column: ");
 		this.changeableSecondLabel = new Label("Amount in row: ");
 
@@ -48,6 +55,9 @@ public class Board {
 		this.xSizeField = new TextField("50");
 		this.ySizeField = new TextField("50");
 		this.changeableFirstField = new TextField("3");
+		this.changeableSecondField = new TextField("3");
+		this.ktField = new TextField("0.1");
+		this.mcIterationsField = new TextField("5");
 		this.changeableSecondField = new TextField("3");
 		this.boundaryConditionComboBox = new ComboBox<>();
 		this.nucleationComboBox = new ComboBox<>();
@@ -63,6 +73,7 @@ public class Board {
 		this.oneStepButton = new Button("ONE STEP");
 		this.setInitialsButton = new Button("SET INITIALS");
 		this.fiveStepsButton = new Button("FIVE STEPS");
+		this.monteCarloSimulationButton = new Button("START MC");
 
 		//settings
 		this.boundaryConditionComboBox.setMaxSize(150,10);
@@ -71,13 +82,19 @@ public class Board {
 		this.cellsGrid.setPadding(new Insets(10));
 		this.oneStepButton.setMaxSize(100,10);
 		this.fiveStepsButton.setMaxSize(100,10);
-		menuGrid.setPadding(new Insets(10));
-		menuGrid.setHgap(10);
-		menuGrid.setVgap(10);
+		caMenuGrid.setPadding(new Insets(10));
+		caMenuGrid.setHgap(10);
+		caMenuGrid.setVgap(10);
+		mcMenuGrid.setPadding(new Insets(10));
+		mcMenuGrid.setHgap(10);
+		mcMenuGrid.setVgap(10);
 
-		menuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
-		menuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton,this.fiveStepsButton);
-
+		caMenuGrid.addColumn(0,xSizeLabel,ySizeLabel,boundaryConditionLabel,neighbourLabel,nucleationLabel,this.changeableFirstLabel,this.changeableSecondLabel,this.setInitialsButton);
+		caMenuGrid.addColumn(1,this.xSizeField,this.ySizeField,this.boundaryConditionComboBox,this.neighbourComboBox,this.nucleationComboBox,changeableFirstField,changeableSecondField,this.oneStepButton,this.fiveStepsButton);
+		mcMenuGrid.addColumn(0,ktLabel,mcIterationsLabel);
+		mcMenuGrid.addColumn(1,this.ktField,this.mcIterationsField,this.monteCarloSimulationButton);
+		menuGrid.addRow(0,caMenuGrid);
+		menuGrid.addRow(1,mcMenuGrid);
 		this.stageGrid.add(menuGrid,0,0);
 		ScrollPane scrollPane = new ScrollPane(this.cellsGrid);
 		this.stageGrid.add(scrollPane,1,0);

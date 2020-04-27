@@ -5,6 +5,9 @@ import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class Cell {
@@ -14,7 +17,7 @@ public class Cell {
 	private int x;
 	private int y;
 	private Color color;
-
+	private int energy;
 
 	Cell(CellState state, int x, int y, int size) {
 		this.state = state;
@@ -22,6 +25,7 @@ public class Cell {
 		this.y = y;
 		this.size= size;
 		this.color = Color.WHITE;
+		this.energy = 8;
 		this.rectangle = new Rectangle(size,size,this.color);
 		this.rectangle.setOnMouseClicked(event -> {
 			if(this.state==CellState.DEAD) setAlive();
@@ -35,12 +39,12 @@ public class Cell {
 		this.y = copy.y;
 		this.size= copy.size;
 		this.color = copy.color;
+		this.energy = copy.energy;
 		this.rectangle = new Rectangle(this.size,this.size,this.color);
 		this.rectangle.setOnMouseClicked(event -> {
 			if(this.state==CellState.DEAD) setAlive();
 			else setDead();
 		});
-
 	}
 
 	public void setAlive(){
@@ -59,5 +63,4 @@ public class Cell {
 		this.state = CellState.DEAD;
 		this.rectangle.setFill(Color.WHITE);
 	}
-
 }
