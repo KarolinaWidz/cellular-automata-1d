@@ -117,7 +117,7 @@ public class Controller2d {
 	private void mcChooser(){
 		for(int i=0;i<Math.max(this.xSize,this.ySize);i++)
 			simulationChooser();
-		for(int i=0;i< checkInt(board.getMcIterationsField().getText(),0);i++){
+		for(int i=0;i< checkInt(board.getMcIterationsField().getText(),0)+1;i++){
 			if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
 				mcSimulation(checkDouble(board.getKtField().getText()),i,this.cellsMatrix,0);
 			else
