@@ -1,12 +1,11 @@
 package sample.oneDimensionalSimulation;
 
-import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import lombok.Getter;
+import sample.twoDimensionalGrainGrowth.Controller2d;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Pattern;
 
 @Getter
 public class Controller1d {
@@ -22,11 +21,9 @@ public class Controller1d {
 
 
 	public Controller1d() {
-
 		board = Board.getInstance();
 		this.stageGrid = board.getStageGrid();
 		this.gridFlag = new AtomicBoolean(false);
-
 		board.getGridButton().setOnAction((event)-> {
 		if(!this.gridFlag.get()) {
 			board.getCellsGrid().setGridLinesVisible(true);
@@ -36,7 +33,6 @@ public class Controller1d {
 			board.getCellsGrid().setGridLinesVisible(false);
 			this.gridFlag.set(false);
 		}});
-
 		getValues(board.getCellsNumberField().getText(),board.getIterationField().getText());
 		board.getRunButton().setOnAction((event) ->{
 			getValues(board.getCellsNumberField().getText(),board.getIterationField().getText());
@@ -46,7 +42,7 @@ public class Controller1d {
 		});
 	}
 
-	private void draw(GridPane cellsGrid){
+	private void drawGrid(GridPane cellsGrid){
 		for(int i = 0; i< this.cells; i++){
 			for(int j = 0; j< this.iterations; j++){
 				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.DEAD.getColor()),i,j);
@@ -56,16 +52,12 @@ public class Controller1d {
 
 	private void simulation(Integer rule, GridPane cellsGrid){
 		String binaryRule = String.format("%8s",Integer.toBinaryString(rule)).replace(" ","0");
+
 		for(int x=0;x<this.cells;x++){
-			if(x==this.cells/2){
-				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.ALIVE.getColor()),x,0);
-				this.cellsMatrix[0][x]= Cell.ALIVE;
-			}
-			else{
-				cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, Cell.DEAD.getColor()),x,0);
-				this.cellsMatrix[0][x]= Cell.DEAD;
-			}
+			cellsGrid.add(new Rectangle(this.BORDER_SIZE / this.cells, this.BORDER_SIZE / this.cells, (x==this.cells/2)?Cell.ALIVE.getColor():Cell.DEAD.getColor()),x,0);
+			this.cellsMatrix[0][x]= (x==this.cells/2)? Cell.ALIVE : Cell.DEAD;
 		}
+
 		for(int y=1;y<this.iterations;y++) {
 			for (int x = 0; x < this.cells; x++) {
 				int position;
@@ -78,7 +70,7 @@ public class Controller1d {
 				else if (activeCells.center.getFlag())position=5;
 				else if (activeCells.right.getFlag())position=6;
 				else position=7;
-				next(binaryRule,x,y,position);
+				nextCell(binaryRule,x,y,position);
 			}
 		}
 	}
@@ -88,31 +80,19 @@ public class Controller1d {
 		else throw new IllegalArgumentException();
 	}
 
-	private void next(String binaryRule, int x, int y, int position){
+	private void nextCell(String binaryRule, int x, int y, int position){
 		this.cellsMatrix[y][x]=ruleConverter(binaryRule.charAt(position));
 		board.getCellsGrid().add(new Rectangle(this.BORDER_SIZE / this.cells,this.BORDER_SIZE / this.cells,
 				this.cellsMatrix[y][x].getColor()),x,y);
 	}
 
 	private void getValues(String cellsNumber, String iterationsNumber){
-		if(Pattern.matches("^\\d*$",cellsNumber) && Pattern.matches("^\\d*$",iterationsNumber)
-				&& !cellsNumber.equals("") && !iterationsNumber.equals("")) {
-			board.getCellsGrid().getChildren().clear();
-			this.cells = (Integer.parseInt(cellsNumber));
-			this.iterations = (Integer.parseInt(iterationsNumber));
-			draw(board.getCellsGrid());
-		}
-		else {
-			try{
-				throw new IllegalArgumentException("INVALID ARGUMENT");
-			}catch(IllegalArgumentException e ){
-				Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
-				alert.show();
-				this.cells=0;
-				this.iterations=0;
-			}
-		}
+		board.getCellsGrid().getChildren().clear();
+		this.cells = Controller2d.checkInt(cellsNumber,1);
+		this.iterations = Controller2d.checkInt(iterationsNumber,1);
+		drawGrid(board.getCellsGrid());
 	}
+
 	private int boundaryConverter(int x){
 		return x<0?this.cells-1 : x%this.cells;
 	}

@@ -5,6 +5,7 @@ import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.Random;
 
 public class RandomWithRadiusStructure implements InitialStructure {
+
 	@Override
 	public void draw(Cell[][] cellsMatrix, Board board) {
 		int amount = checkValues(cellsMatrix.length*cellsMatrix[0].length,board.getChangeableFirstField().getText());

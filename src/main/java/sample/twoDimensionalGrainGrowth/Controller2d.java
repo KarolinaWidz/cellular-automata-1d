@@ -159,20 +159,22 @@ public class Controller2d {
 		}
 	}
 
-	private int checkInt(String size, int value){
-		if(!size.equals("")){
+	public static int checkInt(String size, int value){
+		boolean condition=false;
+		if(!size.equals(""))
 			if(Pattern.matches("^\\d*$",size) && (Integer.parseInt(size))>0)
-				return (Integer.parseInt(size));
-			else{
-				createErrorAlert();
-				return value;
-			}
-		}
-		else {
+				condition=true;
+		return parseValue(condition,size,value);
+	}
+
+
+	public static int parseValue(boolean condition, String text, int value){
+		if(condition)
+			return (Integer.parseInt(text));
+		else{
 			createErrorAlert();
 			return value;
 		}
-
 	}
 
 	private double checkDouble(String size){

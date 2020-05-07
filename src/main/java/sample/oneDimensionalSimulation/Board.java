@@ -55,7 +55,7 @@ class Board {
 		this.cellsNumberField.setTooltip(cellsToolTip);
 		this.ruleChoice.setTooltip(ruleChoiceToolTip);
 
-		this.ruleChoice.getItems().addAll("30","60","90","120","225");
+		this.ruleChoice.getItems().addAll("1","30","60","90","120","225","255");
 		this.ruleChoice.setValue("30");
 		this.cellsGrid.setPadding(new Insets(10));
 		menuGrid.setPadding(new Insets(10));
