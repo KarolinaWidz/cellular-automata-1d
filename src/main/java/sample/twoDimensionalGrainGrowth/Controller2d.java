@@ -3,9 +3,9 @@ package sample.twoDimensionalGrainGrowth;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
-import org.apache.commons.lang3.math.NumberUtils;
 import sample.twoDimensionalGrainGrowth.initialStates.StructureChooser;
 import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourChooser;
+
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -179,7 +179,7 @@ public class Controller2d {
 
 	private double checkDouble(String size){
 		if(!size.equals("")) {
-			if (NumberUtils.isParsable(size.replace(",", ".")) && (Double.parseDouble(size)) >= 0.1
+			if (Pattern.matches("([0-9]*)\\.([0-9]*)",size) && (Double.parseDouble(size)) >= 0.1
 					&& (Double.parseDouble(size)) <= 6)
 				return (Double.parseDouble(size));
 			else{
@@ -194,7 +194,7 @@ public class Controller2d {
 		}
 	}
 
-	public static void createErrorAlert(){
+	private static void createErrorAlert(){
 		try{
 			throw new IllegalArgumentException("INVALID ARGUMENT");
 		}catch(IllegalArgumentException e ){
