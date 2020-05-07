@@ -88,7 +88,6 @@ public class Controller2d {
 		else
 			simulation(newCellsMatrix,createBiggerCellsMatrix(),1);
 
-
 		for(int i=0; i<this.ySize; i++)
 			for(int j=0; j<this.xSize; j++)
 				this.cellsMatrix[i][j].copyState(newCellsMatrix[i][j]);
@@ -115,13 +114,13 @@ public class Controller2d {
 
 
 	private void mcChooser(){
-		for(int i=0;i<Math.max(this.xSize,this.ySize);i++)
-			simulationChooser();
-		for(int i=0;i< checkInt(board.getMcIterationsField().getText(),0)+1;i++){
+		int iterationsNumber=checkInt(board.getMcIterationsField().getText(),0);
+		double kt=checkDouble(board.getKtField().getText());
+		for(int i=0;i<iterationsNumber+1;i++){
 			if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
-				mcSimulation(checkDouble(board.getKtField().getText()),i,this.cellsMatrix,0);
+				mcSimulation(kt,i,this.cellsMatrix,0);
 			else
-				mcSimulation(checkDouble(board.getKtField().getText()),i,createBiggerCellsMatrix(),1);
+				mcSimulation(kt,i,createBiggerCellsMatrix(),1);
 		}
 	}
 
@@ -134,14 +133,19 @@ public class Controller2d {
 				.collect(Collectors.toList());
 		for(int j=0;j<(this.xSize*this.ySize);j++){
 			Collections.shuffle(mixedCells);
-			neighbours = neighbourChooser.addNeighbours(mixedCells.get(0).getX()+shift, mixedCells.get(0).getY()+shift,newCellMatrix)
-					.stream().filter(cell -> cell.getState().getFlag()).collect(Collectors.toList());
+			neighbours = neighbourChooser
+					.addNeighbours(mixedCells.get(0).getX()+shift, mixedCells.get(0).getY()+shift,newCellMatrix)
+					.stream()
+					.filter(cell -> cell.getState().getFlag())
+					.collect(Collectors.toList());
 			Collections.shuffle(neighbours);
 			Cell actual;
 			if(neighbours.size()==0) break;
 			if(i==0) actual = mixedCells.get(0);
 			else actual = new Cell(neighbours.get(0));
-			int counter = (int) neighbours.stream().filter(cell -> cell.getColor() != actual.getColor()).count();
+			int counter = (int) neighbours.stream()
+					.filter(cell -> cell.getColor() != actual.getColor())
+					.count();
 			double energyDifference = counter - actual.getEnergy();
 			if(energyDifference>0 && random.nextDouble()<=Math.exp((-1)*energyDifference/kt)){
 				actual.setEnergy(counter);
@@ -156,32 +160,44 @@ public class Controller2d {
 	}
 
 	private int checkInt(String size, int value){
-		if(Pattern.matches("^\\d*$",size) && (Integer.parseInt(size))>0){
-			return (Integer.parseInt(size));
-		}
-		else {
-			try{
-				throw new IllegalArgumentException("INVALID ARGUMENT");
-			}catch(IllegalArgumentException e ){
-				Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
-				alert.show();
+		if(!size.equals("")){
+			if(Pattern.matches("^\\d*$",size) && (Integer.parseInt(size))>0)
+				return (Integer.parseInt(size));
+			else{
+				createErrorAlert();
 				return value;
 			}
 		}
+		else {
+			createErrorAlert();
+			return value;
+		}
+
 	}
 
 	private double checkDouble(String size){
-		if(NumberUtils.isParsable(size.replace(",",".")) && (Double.parseDouble(size))>=0.1 && (Double.parseDouble(size))<=6){
-			return (Double.parseDouble(size));
-		}
-		else {
-			try{
-				throw new IllegalArgumentException("INVALID ARGUMENT");
-			}catch(IllegalArgumentException e ){
-				Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
-				alert.show();
-				return 0.1;
+		if(!size.equals("")) {
+			if (NumberUtils.isParsable(size.replace(",", ".")) && (Double.parseDouble(size)) >= 0.1
+					&& (Double.parseDouble(size)) <= 6)
+				return (Double.parseDouble(size));
+			else{
+				createErrorAlert();
+				return 0.0;
 			}
 		}
+		else {
+			createErrorAlert();
+			return 0.0;
+
+		}
 	}
+
+	public static void createErrorAlert(){
+		try{
+			throw new IllegalArgumentException("INVALID ARGUMENT");
+		}catch(IllegalArgumentException e ){
+			Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
+			alert.show();
+	}
+}
 }

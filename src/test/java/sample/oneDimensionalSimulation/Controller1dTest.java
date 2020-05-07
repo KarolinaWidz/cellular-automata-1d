@@ -69,12 +69,4 @@ class Controller1dTest extends ApplicationTest {
 		clickOn("RUN");
 		FxAssert.verifyThat("#cellsGrid", NodeMatchers.isNotNull());
 	}
-
-	@Test
-	void setSizeButtonTest() {
-		clickOn("SET SIZE");
-		FxAssert.verifyThat("#cellsGrid", NodeMatchers.isNotNull());
-	}
-
-
 }

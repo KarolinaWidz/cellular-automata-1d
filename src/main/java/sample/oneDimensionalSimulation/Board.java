@@ -11,7 +11,6 @@ class Board {
 	private static Board instance;
 	private GridPane cellsGrid;
 	private TextField iterationField;
-	private Button setSizeButton;
 	private TextField cellsNumberField;
 	private Button gridButton;
 	private Button runButton;
@@ -66,13 +65,11 @@ class Board {
 		//buttons
 		this.runButton = new Button("RUN");
 		this.gridButton = new Button("SHOW GRID");
-		this.setSizeButton = new Button("SET SIZE");
-
 		this.iterationField.setId("iterationsField");
 		this.cellsNumberField.setId("cellsNumberField");
 		this.cellsGrid.setId("cellsGrid");
 
-		menuGrid.addColumn(0,iterationLabel,cellsNumberLabel,ruleChoiceLabel,this.setSizeButton,this.gridButton);
+		menuGrid.addColumn(0,iterationLabel,cellsNumberLabel,ruleChoiceLabel,this.gridButton);
 		menuGrid.addColumn(1,this.iterationField,this.cellsNumberField,this.ruleChoice,this.runButton);
 
 		this.stageGrid.add(menuGrid,0,0);

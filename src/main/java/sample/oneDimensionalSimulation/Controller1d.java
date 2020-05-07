@@ -25,11 +25,8 @@ public class Controller1d {
 
 		board = Board.getInstance();
 		this.stageGrid = board.getStageGrid();
-		this.cells = 11;
 		this.gridFlag = new AtomicBoolean(false);
-		this.iterations = 11;
-		this.rule = 30;
-		this.cellsMatrix = new Cell[this.iterations][this.cells];
+
 		board.getGridButton().setOnAction((event)-> {
 		if(!this.gridFlag.get()) {
 			board.getCellsGrid().setGridLinesVisible(true);
@@ -39,9 +36,8 @@ public class Controller1d {
 			board.getCellsGrid().setGridLinesVisible(false);
 			this.gridFlag.set(false);
 		}});
-		draw(board.getCellsGrid());
-		board.getSetSizeButton().setOnAction(event -> getValues(board.getCellsNumberField().getText(),board.getIterationField().getText()));
 
+		getValues(board.getCellsNumberField().getText(),board.getIterationField().getText());
 		board.getRunButton().setOnAction((event) ->{
 			getValues(board.getCellsNumberField().getText(),board.getIterationField().getText());
 			this.rule = Integer.parseInt(board.getRuleChoice().getValue());
