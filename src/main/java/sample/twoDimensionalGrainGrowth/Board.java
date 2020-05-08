@@ -52,8 +52,8 @@ public class Board {
 		this.changeableSecondLabel = new Label("~Amount in row: ");
 
 		//input
-		this.xSizeField = new TextField("50");
-		this.ySizeField = new TextField("50");
+		this.xSizeField = new TextField("3");
+		this.ySizeField = new TextField("3");
 		this.changeableFirstField = new TextField("3");
 		this.changeableSecondField = new TextField("3");
 		this.ktField = new TextField("0.1");
@@ -98,6 +98,17 @@ public class Board {
 		this.stageGrid.add(menuGrid,0,0);
 		ScrollPane scrollPane = new ScrollPane(this.cellsGrid);
 		this.stageGrid.add(scrollPane,1,0);
+
+		neighbourLabel.setId("Neighbour");
+		this.changeableFirstLabel.setId("changeableFirstLabel");
+		this.changeableSecondLabel.setId("changeableSecondLabel");
+		this.changeableFirstField.setId("changeableFirstField");
+		this.changeableSecondField.setId("changeableSecondField");
+		this.nucleationComboBox.setId("nucleationComboBox");
+		this.ktField.setId("ktField");
+		this.mcIterationsField.setId("mcIterationsField");
+		this.xSizeField.setId("xSizeField");
+		this.ySizeField.setId("ySizeField");
 
 		return this.stageGrid;
 	}

@@ -18,6 +18,7 @@ public class Controller2d {
 	private int ySize;
 	private Cell [][] cellsMatrix;
 	private StructureChooser structureChooser;
+	private boolean dialogOpen = false;
 
 
 	public Controller2d(){
@@ -199,7 +200,7 @@ public class Controller2d {
 			throw new IllegalArgumentException("INVALID ARGUMENT");
 		}catch(IllegalArgumentException e ){
 			Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage());
-			alert.show();
+			alert.showAndWait();
 	}
 }
 }

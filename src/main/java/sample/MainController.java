@@ -12,10 +12,14 @@ class MainController {
 	private Tab tab1D;
 	private Tab tab2D;
 
+
 	MainController() {
 		this.tabPane = new TabPane();
 		this.tab1D = new Tab("Simulation 1D");
 		this.tab2D = new Tab("Grain Growth 2D with Monte Carlo");
+		this.tabPane.setId("tabPane");
+		this.tab1D.setId("tab1D");
+		this.tab2D.setId("tab2D");
 		this.tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 		this.tab1D.setContent(new Controller1d().getStageGrid());
 		this.tab2D.setContent(new Controller2d().getStageGrid());

@@ -21,7 +21,7 @@ class Board {
 		this.stageGrid=initBoard();
 	}
 
-	public GridPane initBoard(){
+	private GridPane initBoard(){
 
 		this.cellsGrid = new GridPane();
 		this.stageGrid = new GridPane();

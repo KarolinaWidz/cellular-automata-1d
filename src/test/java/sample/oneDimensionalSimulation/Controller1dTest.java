@@ -1,36 +1,17 @@
 package sample.oneDimensionalSimulation;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.api.FxAssert;
-import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
-import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.loadui.testfx.controls.TextInputControls.clearTextIn;
+import static org.testfx.api.FxAssert.verifyThat;
 
-@ExtendWith(ApplicationExtension.class)
-class Controller1dTest extends ApplicationTest {
-
-
-	@Override
-	public void start(Stage primaryStage){
-		primaryStage.setTitle("Cellular automaton");
-		Parent sceneRoot = Board.getInstance().initBoard();
-		primaryStage.setScene(new Scene(sceneRoot, 900, 500));
-		primaryStage.setMaximized(true);
-		primaryStage.show();
-	}
+class Controller1dTest extends sample.TestFXBase {
 
 	@Test
 	void ruleConverterTest() {
-
 		assertAll(
 				() -> Assertions.assertEquals(Cell.DEAD, Controller1d.ruleConverter('0')),
 				() -> assertEquals(Cell.ALIVE, Controller1d.ruleConverter('1')),
@@ -39,34 +20,87 @@ class Controller1dTest extends ApplicationTest {
 	}
 
 	@Test
-	void iterationsTextFieldTest() {
+	void iterationsFieldTest() {
 		assertAll(
-				() -> FxAssert.verifyThat("#iterationsField", (TextField textfield) -> {
-					String value = textfield.getText();
-					return Pattern.matches("^\\d*$", value);
-				}),
-				() -> FxAssert.verifyThat("#iterationsField", (TextField textfield) -> {
-					String value = textfield.getText();
-					return !value.equals("");
-				}));
+				()->{
+					clickOn("#iterationsField");
+					clearTextIn("#iterationsField");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#iterationsField");
+					clearTextIn("#iterationsField");
+					write("0");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#iterationsField");
+					clearTextIn("#iterationsField");
+					write("0.2");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#iterationsField");
+					write("TEST");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				}
+		);
+		clickOn("#iterationsField");
+		clearTextIn("#iterationsField");
+		write("11");
 	}
 
 	@Test
-	void cellsNumberFieldTest() {
+	void cellsFieldTest() {
 		assertAll(
-				() -> FxAssert.verifyThat("#iterationsField", (TextField textfield) -> {
-					String value = textfield.getText();
-					return Pattern.matches("^\\d*$", value);
-				}),
-				() -> FxAssert.verifyThat("#cellsNumberField", (TextField textfield) -> {
-					String value = textfield.getText();
-					return !value.equals("");
-				}));
+				()->{
+					clickOn("#cellsNumberField");
+					clearTextIn("#cellsNumberField");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#cellsNumberField");
+					clearTextIn("#cellsNumberField");
+					write("0");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#cellsNumberField");
+					clearTextIn("#cellsNumberField");
+					write("0.2");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				},
+				()->{
+					clickOn("#cellsNumberField");
+					write("TEST");
+					clickOn("RUN");
+					assertEquals(listWindows().size(),2);
+					clickOn("OK");
+				}
+		);
+		clickOn("#cellsNumberField");
+		clearTextIn("#cellsNumberField");
+		write("11");
+
 	}
 
 	@Test
 	void runButtonTest() {
 		clickOn("RUN");
-		FxAssert.verifyThat("#cellsGrid", NodeMatchers.isNotNull());
+		verifyThat("#cellsGrid", NodeMatchers.isNotNull());
 	}
 }

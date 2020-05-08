@@ -57,6 +57,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>sample.Main</mainClass>
         <testFXVersion>4.0.16-alpha</testFXVersion>
+        <testFxLoadUiVersion>3.1.0</testFxLoadUiVersion>
         <lombokVersion>1.18.12</lombokVersion>
         <junitVersion>5.4.0</junitVersion>
         <assertJVersion>3.13.2</assertJVersion>
@@ -69,6 +70,12 @@
         <groupId>org.testfx</groupId>
         <artifactId>testfx-core</artifactId>
         <version>${testFXVersion}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.loadui</groupId>
+        <artifactId>testFx</artifactId>
+        <version>${testFxLoadUiVersion}</version>
         <scope>test</scope>
     </dependency>
     <dependency>
