@@ -17,7 +17,7 @@ public class RandomStructure implements InitialStructure {
 
 	@Override
 	public void changeFields(Board board) {
-		board.getChangeableFirstLabel().setText("Amount: ");
+		board.getChangeableFirstLabel().setText("~Amount: ");
 		board.getChangeableSecondLabel().setText("");
 		board.getChangeableFirstField().setVisible(true);
 		board.getChangeableSecondField().setVisible(false);

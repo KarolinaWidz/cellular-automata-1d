@@ -39,7 +39,7 @@ public class RandomWithRadiusStructure implements InitialStructure {
 	}
 	@Override
 	public void changeFields(Board board) {
-		board.getChangeableFirstLabel().setText("Amount: ");
+		board.getChangeableFirstLabel().setText("~Amount: ");
 		board.getChangeableSecondLabel().setText("Radius: ");
 		board.getChangeableFirstField().setVisible(true);
 		board.getChangeableSecondField().setVisible(true);

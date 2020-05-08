@@ -37,7 +37,6 @@
         <lombokVersion>1.18.12</lombokVersion>
         <junitVersion>5.4.0</junitVersion>
         <assertJVersion>3.13.2</assertJVersion>
-        <commonsLangVersion>3.10</commonsLangVersion>
     </properties>
 
 
@@ -71,11 +70,6 @@
         <artifactId>assertj-core</artifactId>
         <version>${assertJVersion}</version>
         <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>${commonsLangVersion}</version>
     </dependency>
     <dependency>
         <groupId>org.projectlombok</groupId>

@@ -48,8 +48,8 @@ public class Board {
 		Label neighbourLabel = new Label("Neighbour: ");
 		Label mcIterationsLabel = new Label("Number of iterations: ");
 		Label ktLabel = new Label("kt: (0.1-6) ");
-		this.changeableFirstLabel = new Label("Amount in column: ");
-		this.changeableSecondLabel = new Label("Amount in row: ");
+		this.changeableFirstLabel = new Label("~Amount in column: ");
+		this.changeableSecondLabel = new Label("~Amount in row: ");
 
 		//input
 		this.xSizeField = new TextField("50");
@@ -73,7 +73,7 @@ public class Board {
 		this.oneStepButton = new Button("ONE STEP");
 		this.setInitialsButton = new Button("SET INITIALS");
 		this.fiveStepsButton = new Button("FIVE STEPS");
-		this.monteCarloSimulationButton = new Button("START MC");
+		this.monteCarloSimulationButton = new Button("START MONTE \nCARLO ALGORITHM");
 
 		//settings
 		this.boundaryConditionComboBox.setMaxSize(150,10);

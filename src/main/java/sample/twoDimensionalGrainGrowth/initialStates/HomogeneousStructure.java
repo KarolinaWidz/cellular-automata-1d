@@ -20,8 +20,8 @@ public class HomogeneousStructure implements InitialStructure{
 
 	@Override
 	public void changeFields(Board board) {
-		board.getChangeableFirstLabel().setText("Amount in column: ");
-		board.getChangeableSecondLabel().setText("Amount in row: ");
+		board.getChangeableFirstLabel().setText("~Amount in column: ");
+		board.getChangeableSecondLabel().setText("~Amount in row: ");
 		board.getChangeableFirstField().setVisible(true);
 		board.getChangeableSecondField().setVisible(true);
 	}
