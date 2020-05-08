@@ -21,8 +21,8 @@
                 id : 'cellular_automaton_1d_id',
                 url : 'cellular_automaton_1d.jnlp',
                 placeholder : 'javafx-app-placeholder',
-                width : '600',
-                height : '400'
+                width : '1000',
+                height : '500'
             },
             {
                 javafx : '8.0+'
@@ -35,8 +35,8 @@
 </script>
 
 </head><body>
-<h2>Test page for <b>Cellular-Automaton</b></h2>
-  <b>Webstart:</b> <a href='cellular_automaton_1d.jnlp' onclick="return launchApplication('cellular_automaton_1d.jnlp');">click to launch this app as webstart</a><br><hr><br>
+<h2>You can try Cellular-Automaton here:</h2>
+  <b>If you don't see application below:</b> <a href='cellular_automaton_1d.jnlp' onclick="return launchApplication('cellular_automaton_1d.jnlp');">click here to download this app</a><br><hr><br>
 
   <!-- Applet will be inserted here -->
   <div id='javafx-app-placeholder'></div>
