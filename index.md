@@ -21,7 +21,7 @@
                 id : 'cellular_automaton_1d_id',
                 url : 'cellular_automaton_1d.jnlp',
                 placeholder : 'javafx-app-placeholder',
-                width : '1000',
+                width : '900',
                 height : '500'
             },
             {
