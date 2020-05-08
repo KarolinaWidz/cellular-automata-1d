@@ -2,8 +2,6 @@
   <SCRIPT src="https://java.com/js/dtjava.js"></SCRIPT>
 
 
-
-
 </head><body>
 <h2>You can try Cellular-Automaton here:</h2>
   <a href='cellular_automaton_1d.jar' onclick="return launchApplication('cellular_automaton_1d.jar');">click to download this app</a><br><hr><br>
