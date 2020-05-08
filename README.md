@@ -4,9 +4,12 @@ Cellular automaton simulation using JavaFX.
 - Grain Growth 2D
 - Smoothing edges using Monte Carlo method
 
+App is available on: https://karolinawidz.github.io/cellular-automaton/
+
 ![CA simulation](./simulation.PNG) 
 
 ![CA Grain Growth](./grainGrowth.PNG)
+
 
 ## Technologies
 - Java 8
