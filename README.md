@@ -17,7 +17,7 @@ App is available on: https://karolinawidz.github.io/cellular-automaton/
 - TestFX
 - Lombok (version 1.18.12)
 
-##Prerequisites
+## Prerequisites
   To run this project you need:
   <ul>
     <li>Java Runtime Environment - <a href=https://www.java.com/pl/download/> click here to download.</a></li>

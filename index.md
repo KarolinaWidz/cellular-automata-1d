@@ -11,10 +11,12 @@
   <h4>Prerequisites: </h4>
   To run this project you need:
   <ul>
-    <li>Java Runtime Environment - <a href=https://www.java.com/pl/download/> click here to download.</a></li>
+    <li>Java Runtime Environment - <a href="https://www.java.com/pl/download/"> click here to download.</a></li>
   </ul>
   
-  If the app doesn't run automatically open command line in folder with the app and run it with
+  If the app doesn't run automatically open command line in folder with the app and run it with:
   <code>java -jar cellular_automaton.jar</code>
+  <br>
+  <br>
 
 </body></html>
