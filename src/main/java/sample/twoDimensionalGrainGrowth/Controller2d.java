@@ -117,11 +117,13 @@ public class Controller2d {
 	private void mcChooser(){
 		int iterationsNumber=checkInt(board.getMcIterationsField().getText(),0);
 		double kt=checkDouble(board.getKtField().getText());
-		for(int i=0;i<iterationsNumber+1;i++){
-			if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
-				mcSimulation(kt,i,this.cellsMatrix,0);
-			else
-				mcSimulation(kt,i,createBiggerCellsMatrix(),1);
+		if(kt!=0.0){
+			for(int i=0;i<iterationsNumber+1;i++){
+				if(board.getBoundaryConditionComboBox().getValue().equals("Periodic"))
+					mcSimulation(kt,i,this.cellsMatrix,0);
+				else
+					mcSimulation(kt,i,createBiggerCellsMatrix(),1);
+			}
 		}
 	}
 
@@ -180,7 +182,7 @@ public class Controller2d {
 
 	private double checkDouble(String size){
 		if(!size.equals("")) {
-			if (Pattern.matches("([0-9]*)\\.([0-9]*)",size) && (Double.parseDouble(size)) >= 0.1
+			if ((Pattern.matches("([0-9]*)\\.([0-9]*)",size)|| Pattern.matches("^\\d*$",size)) && (Double.parseDouble(size)) >= 0.1
 					&& (Double.parseDouble(size)) <= 6)
 				return (Double.parseDouble(size));
 			else{
