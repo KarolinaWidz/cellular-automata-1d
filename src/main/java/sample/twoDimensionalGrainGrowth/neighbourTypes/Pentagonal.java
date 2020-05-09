@@ -5,7 +5,7 @@ import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.List;
 import java.util.Random;
 
-public class Pentagonal implements Neighbour {
+public class Pentagonal implements Neighbourhood {
 	@Override
 	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid, Board board) {
 		cellList.clear();

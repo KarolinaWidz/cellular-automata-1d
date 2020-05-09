@@ -4,7 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
 import sample.twoDimensionalGrainGrowth.initialStates.StructureChooser;
-import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourChooser;
+import sample.twoDimensionalGrainGrowth.neighbourTypes.NeighbourhoodChooser;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -95,12 +95,12 @@ public class Controller2d {
 	}
 
 	private void simulation(Cell [][] newCellsMatrix, Cell [][] cellsMatrix, int shift){
-		NeighbourChooser neighbourChooser = new NeighbourChooser();
+		NeighbourhoodChooser neighbourhoodChooser = new NeighbourhoodChooser();
 		List<Cell> neighbours;
 		for (int y = shift; y < cellsMatrix.length-shift; y++) {
 			for (int x = shift; x < cellsMatrix[0].length-shift; x++) {
 				if (!cellsMatrix[y][x].getState().getFlag()) {
-					neighbours = neighbourChooser.addNeighbours(x, y,cellsMatrix);
+					neighbours = neighbourhoodChooser.addNeighbours(x, y,cellsMatrix);
 					Map<Cell, Integer> statesMap = new HashMap<>();
 					neighbours.stream().filter(cell -> cell.getState().getFlag()).forEach(cell -> statesMap
 							.put(cell, statesMap.getOrDefault(cell, 0) + 1));
@@ -127,14 +127,14 @@ public class Controller2d {
 
 	private void mcSimulation(double kt, int i, Cell [][] newCellMatrix,int shift){
 		Random random = new Random();
-		NeighbourChooser neighbourChooser = new NeighbourChooser();
+		NeighbourhoodChooser neighbourhoodChooser = new NeighbourhoodChooser();
 		List <Cell> neighbours;
 		List <Cell> mixedCells = Arrays.stream(this.cellsMatrix)
 				.flatMap(Arrays::stream)
 				.collect(Collectors.toList());
 		for(int j=0;j<(this.xSize*this.ySize);j++){
 			Collections.shuffle(mixedCells);
-			neighbours = neighbourChooser
+			neighbours = neighbourhoodChooser
 					.addNeighbours(mixedCells.get(0).getX()+shift, mixedCells.get(0).getY()+shift,newCellMatrix)
 					.stream()
 					.filter(cell -> cell.getState().getFlag())

@@ -162,7 +162,7 @@ class Controller2dTest extends TestFXBase {
 	}
 
 	@Test
-	void setInitialTest() {
+	void setInitialFirstFieldTest() {
 		clickOn("#nucleationComboBox");
 		clickOn("Homogeneous");
 		assertAll(
@@ -209,6 +209,56 @@ class Controller2dTest extends TestFXBase {
 		clearTextIn("#changeableFirstField");
 		write("3");
 	}
+
+	@Test
+	void setInitialSecondFieldTest() {
+		clickOn("#nucleationComboBox");
+		clickOn("Homogeneous");
+		assertAll(
+				() -> {
+					clickOn("#changeableSecondField");
+					clearTextIn("#changeableSecondField");
+					clickOn("SET INITIALS");
+					assertEquals(listWindows().size(), 2);
+					clickOn("OK");
+				},
+				() -> {
+					clickOn("#changeableSecondField");
+					clearTextIn("#changeableSecondField");
+					write("0");
+					clickOn("SET INITIALS");
+					assertEquals(listWindows().size(), 2);
+					clickOn("OK");
+				},
+				() -> {
+					clickOn("#changeableSecondField");
+					clearTextIn("#changeableSecondField");
+					write("0.2");
+					clickOn("SET INITIALS");
+					assertEquals(listWindows().size(), 2);
+					clickOn("OK");
+				},
+				() -> {
+					clickOn("#changeableSecondField");
+					clearTextIn("#changeableSecondField");
+					write("-1");
+					clickOn("SET INITIALS");
+					assertEquals(listWindows().size(), 2);
+					clickOn("OK");
+				},
+				() -> {
+					clickOn("#changeableSecondField");
+					write("TEST");
+					clickOn("SET INITIALS");
+					assertEquals(listWindows().size(), 2);
+					clickOn("OK");
+				}
+		);
+		clickOn("#changeableSecondField");
+		clearTextIn("#changeableSecondField");
+		write("3");
+	}
+
 
 
 

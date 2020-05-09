@@ -4,7 +4,7 @@ import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.List;
 
-public class VonNeumann implements Neighbour {
+public class VonNeumann implements Neighbourhood {
 
 	@Override
 	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid, Board board) {

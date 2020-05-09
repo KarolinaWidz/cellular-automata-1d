@@ -5,7 +5,7 @@ import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Neighbour {
+public interface Neighbourhood {
 	default int periodicBoundaryConverter(int x, int boundary){
 		return x<0?boundary-1 : x%boundary;
 	}

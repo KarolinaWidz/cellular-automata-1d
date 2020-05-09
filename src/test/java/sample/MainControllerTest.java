@@ -13,7 +13,7 @@ class MainControllerTest extends TestFXBase{
 	void switchingPanes(){
 		assertAll(
 				()->{clickOn("#tab2D");
-					verifyThat(find("#Neighbour"), Matchers.notNullValue());},
+					verifyThat(find("#Neighbourhood"), Matchers.notNullValue());},
 				()->{clickOn("#tab1D");
 					verifyThat(find("#iterationsField"), Matchers.notNullValue());}
 		);

@@ -45,15 +45,15 @@ public class Board {
 		Label ySizeLabel = new Label("Y: ");
 		Label boundaryConditionLabel = new Label("Boundary Condition: ");
 		Label nucleationLabel = new Label("Nucleation: ");
-		Label neighbourLabel = new Label("Neighbour: ");
+		Label neighbourLabel = new Label("Neighbourhood: ");
 		Label mcIterationsLabel = new Label("Number of iterations: ");
 		Label ktLabel = new Label("kt: (0.1-6) ");
 		this.changeableFirstLabel = new Label("~Amount in column: ");
 		this.changeableSecondLabel = new Label("~Amount in row: ");
 
 		//input
-		this.xSizeField = new TextField("3");
-		this.ySizeField = new TextField("3");
+		this.xSizeField = new TextField("50");
+		this.ySizeField = new TextField("50");
 		this.changeableFirstField = new TextField("3");
 		this.changeableSecondField = new TextField("3");
 		this.ktField = new TextField("0.1");
@@ -99,12 +99,13 @@ public class Board {
 		ScrollPane scrollPane = new ScrollPane(this.cellsGrid);
 		this.stageGrid.add(scrollPane,1,0);
 
-		neighbourLabel.setId("Neighbour");
+		neighbourLabel.setId("Neighbourhood");
 		this.changeableFirstLabel.setId("changeableFirstLabel");
 		this.changeableSecondLabel.setId("changeableSecondLabel");
 		this.changeableFirstField.setId("changeableFirstField");
 		this.changeableSecondField.setId("changeableSecondField");
 		this.nucleationComboBox.setId("nucleationComboBox");
+		this.neighbourComboBox.setId("neighbourhoodComboBox");
 		this.ktField.setId("ktField");
 		this.mcIterationsField.setId("mcIterationsField");
 		this.xSizeField.setId("xSizeField");

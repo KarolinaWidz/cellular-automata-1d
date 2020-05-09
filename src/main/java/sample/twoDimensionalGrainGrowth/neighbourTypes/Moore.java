@@ -4,7 +4,7 @@ import sample.twoDimensionalGrainGrowth.Board;
 import sample.twoDimensionalGrainGrowth.Cell;
 import java.util.List;
 
-public class Moore implements Neighbour {
+public class Moore implements Neighbourhood {
 
 	@Override
 	public List<Cell> addNeighbours(int x, int y, Cell[][] cellsGrid, Board board) {

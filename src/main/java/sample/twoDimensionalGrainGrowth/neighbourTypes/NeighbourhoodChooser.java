@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NeighbourChooser {
-	private static final Map<String, Neighbour> neighbourMap = new HashMap<>();
+public class NeighbourhoodChooser {
+	private static final Map<String, Neighbourhood> neighbourMap = new HashMap<>();
 	static{
 		neighbourMap.put("Von Neumann",new VonNeumann());
 		neighbourMap.put("Moore", new Moore());
@@ -20,7 +20,7 @@ public class NeighbourChooser {
 	private String type;
 	private static Board board;
 
-	public NeighbourChooser() {
+	public NeighbourhoodChooser() {
 		board = Board.getInstance();
 		this.type = board.getNeighbourComboBox().getValue();
 	}
